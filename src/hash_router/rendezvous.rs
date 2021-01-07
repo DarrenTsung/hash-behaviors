@@ -1,4 +1,5 @@
 use super::*;
+use crate::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
@@ -7,7 +8,7 @@ use std::hash::{Hash, Hasher};
 /// https://en.wikipedia.org/wiki/Rendezvous_hashing
 /// https://medium.com/i0exception/rendezvous-hashing-8c00e2fb58b0
 #[derive(Debug, Default)]
-pub struct Rendezvous(Vec<String>);
+pub struct Rendezvous(Vec<Target>);
 
 impl std::fmt::Display for Rendezvous {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -16,11 +17,11 @@ impl std::fmt::Display for Rendezvous {
 }
 
 impl HashRouter for Rendezvous {
-    fn set_targets(&mut self, targets: Vec<String>) {
+    fn set_targets(&mut self, targets: Vec<Target>) {
         self.0 = targets;
     }
 
-    fn route(&self, key: &str) -> &str {
+    fn route(&self, key: &str) -> Target {
         let targets = &self.0;
 
         let mut highest_value = None;
@@ -39,6 +40,6 @@ impl HashRouter for Rendezvous {
             }
         }
 
-        chosen_target.expect("exists")
+        *chosen_target.expect("exists")
     }
 }

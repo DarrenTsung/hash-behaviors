@@ -1,4 +1,5 @@
 use super::*;
+use crate::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
@@ -8,7 +9,7 @@ const HASHES_TO_GENERATE_PER_TARGET: u32 = 200;
 /// https://www.metabrew.com/article/libketama-consistent-hashing-algo-memcached-clients.
 #[derive(Debug, Default)]
 pub struct Consistent {
-    targets: Vec<String>,
+    targets: Vec<Target>,
     target_hashes: Vec<(u64, usize)>,
 }
 
@@ -19,7 +20,7 @@ impl std::fmt::Display for Consistent {
 }
 
 impl HashRouter for Consistent {
-    fn set_targets(&mut self, targets: Vec<String>) {
+    fn set_targets(&mut self, targets: Vec<Target>) {
         self.target_hashes = {
             let mut hashes = vec![];
             for (target_index, target) in targets.iter().enumerate() {
@@ -39,7 +40,7 @@ impl HashRouter for Consistent {
         self.targets = targets;
     }
 
-    fn route(&self, key: &str) -> &str {
+    fn route(&self, key: &str) -> Target {
         let key_hash = {
             let mut hasher = DefaultHasher::new();
             key.hash(&mut hasher);
@@ -61,6 +62,6 @@ impl HashRouter for Consistent {
         };
         let target_index = self.target_hashes[target_hashes_index].1;
 
-        &self.targets[target_index]
+        self.targets[target_index]
     }
 }

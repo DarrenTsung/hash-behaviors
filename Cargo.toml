@@ -5,4 +5,5 @@ name = "hash-behaviors"
 version = "0.1.0"
 
 [dependencies]
+colorful = "0.2"
 uuid = {version = "0.8", features = ["v4"]}
