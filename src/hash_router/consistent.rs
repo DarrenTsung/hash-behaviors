@@ -12,6 +12,12 @@ pub struct Consistent {
     target_hashes: Vec<(u64, usize)>,
 }
 
+impl std::fmt::Display for Consistent {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Consistent")
+    }
+}
+
 impl HashRouter for Consistent {
     fn set_targets(&mut self, targets: Vec<String>) {
         self.target_hashes = {

@@ -5,9 +5,15 @@ use std::hash::{Hash, Hasher};
 /// Uses a rendezvous hashing algorithm (also known as highest-random-weight).
 ///
 /// https://en.wikipedia.org/wiki/Rendezvous_hashing
-/// https://medium.com/i0exception/rendezvous-hashing-8c00e2fb58b0 
+/// https://medium.com/i0exception/rendezvous-hashing-8c00e2fb58b0
 #[derive(Debug, Default)]
 pub struct Rendezvous(Vec<String>);
+
+impl std::fmt::Display for Rendezvous {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Rendezvous")
+    }
+}
 
 impl HashRouter for Rendezvous {
     fn set_targets(&mut self, targets: Vec<String>) {
