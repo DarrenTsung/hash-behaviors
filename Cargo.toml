@@ -1,0 +1,7 @@
+[package]
+authors = ["darrentsung"]
+edition = "2018"
+name = "hash-behaviors"
+version = "0.1.0"
+
+[dependencies]
